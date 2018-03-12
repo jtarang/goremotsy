@@ -15,7 +15,7 @@ package main
 
 import (
     "fmt"
-    "github.com/jaytarang92/goremotsy/v2"
+    "github.com/jaytarang92/goremotsy"
 )
 
 func main() {
