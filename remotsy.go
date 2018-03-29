@@ -65,7 +65,7 @@ func Post(url string, data []byte) map[string]interface{} {
 //Remotsy is a struct that has the BasicAuth creds
 func (r Remotsy) GetAPIKey() string {
 	if (Remotsy{}) == r {
-		log.Fatal("No Remotsy were specified!")
+		log.Fatal("No Remotsy credentials were specified!")
 	}
 	creds := &r
 	jsonCreds, _ := json.Marshal(creds)
@@ -82,7 +82,7 @@ func (r Remotsy) GetAPIKey() string {
 //GetRemotes returns a list of remotes
 //auth_key is the token from GetAPIKey
 func (r Remotsy) GetRemotes() []interface{} {
-	if (Remotsy{}) == r {
+	if AuthKey == "" {
 		r.GetAPIKey()
 	}
 	data := map[string]string{"auth_key": AuthKey}
@@ -96,7 +96,7 @@ func (r Remotsy) GetRemotes() []interface{} {
 //auth_key is the token from GetAPIKey
 //controllerid ID of controller from GetRemotes
 func (r Remotsy) GetButtons(controllerid string) []interface{} {
-	if (Remotsy{}) == r {
+	if AuthKey == "" {
 		r.GetAPIKey()
 	}
 	data := map[string]string{"auth_key": AuthKey, "id_control": controllerid}
@@ -111,7 +111,7 @@ func (r Remotsy) GetButtons(controllerid string) []interface{} {
 //buttonID ID of button to blast from GetButtons
 //ntime how many time to blast the code
 func (r Remotsy) IrBlast(deviceID string, buttonID string, ntime int) interface{} {
-	if (Remotsy{}) == r {
+	if AuthKey == "" {
 		r.GetAPIKey()
 	}
 	data := map[string]interface{}{"auth_key": AuthKey, "id_dev": deviceID, "code": buttonID, "ntime": ntime}
@@ -124,7 +124,7 @@ func (r Remotsy) IrBlast(deviceID string, buttonID string, ntime int) interface{
 //GetRoutines returns a list of routines
 //auth_key is the token from GetAPIKey
 func (r Remotsy) GetRoutines() []interface{} {
-	if (Remotsy{}) == r {
+	if AuthKey == "" {
 		r.GetAPIKey()
 	}
 	data := map[string]string{"auth_key": AuthKey}
@@ -138,7 +138,7 @@ func (r Remotsy) GetRoutines() []interface{} {
 //auth_key is the token from GetAPIKey
 //routineID is a ID form GetRoutines
 func (r Remotsy) PlayRoutine(routineID string) interface{} {
-	if (Remotsy{}) == r {
+	if AuthKey == "" {
 		r.GetAPIKey()
 	}
 	data := map[string]interface{}{"auth_key": AuthKey, "idroutine": routineID}
@@ -151,7 +151,7 @@ func (r Remotsy) PlayRoutine(routineID string) interface{} {
 //BlinkLED can blink Remotsy's LED once
 //deviceID is Remotsy's ID from GetRemotes
 func (r Remotsy) BlinkLED(deviceID string) interface{} {
-	if (Remotsy{}) == r {
+	if AuthKey == "" {
 		r.GetAPIKey()
 	}
 	data := map[string]interface{}{"auth_key": AuthKey, "id_dev": deviceID}
@@ -164,7 +164,7 @@ func (r Remotsy) BlinkLED(deviceID string) interface{} {
 //FirmwareUpdate updates Remotsy's firmware
 //deviceID is Remotsy's ID from GetRemotes
 func (r Remotsy) FirmwareUpdate(deviceID string) interface{} {
-	if (Remotsy{}) == r {
+	if AuthKey == "" {
 		r.GetAPIKey()
 	}
 	data := map[string]interface{}{"auth_key": AuthKey, "id_dev": deviceID}
