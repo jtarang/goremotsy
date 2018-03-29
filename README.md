@@ -22,7 +22,6 @@ func main() {
     remotsyAPI := remotsy.Remotsy{}
     remotsyAPI.Username = ""
     remotsyAPI.Password = ""
-    remotsyAPI.GetAPIKey()
     remotes := remotsyAPI.GetRemotes()
     fmt.Println(remotes)
 }
