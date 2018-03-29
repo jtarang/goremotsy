@@ -92,6 +92,15 @@ func (r Remotsy) GetRemotes() []interface{} {
 	return response
 }
 
+//DeleteRemote deletes a specified remote
+func (r Remotsy) DeleteRemote(controllerID string) string {
+	data := map[string]string{"auth_key": AuthKey, "id_ctl": controllerID}
+	jsonData, _ := json.Marshal(data)
+	apiURL := URLGenerator("delete_control")
+	response := Post(apiURL, jsonData)["status"].(string)
+	return response
+}
+
 //GetButtons returns a map of buttons for a specific controller
 //auth_key is the token from GetAPIKey
 //controllerid ID of controller from GetRemotes
