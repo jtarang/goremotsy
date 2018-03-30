@@ -32,14 +32,16 @@ var DeviceStatus string
 func URLGenerator(action string) string {
 	apiHost, _ := url.Parse("https://remotsy.com/rest/")
 	endPoints := map[string]string{
-		"login":         "/session/login",
-		"list_controls": "/controls/list",
-		"list_buttons":  "/controls/get_buttons_control",
-		"blast_ir":      "/codes/blast",
-		"list_routines": "/routines/list",
-		"play_routine":  "/routines/play_routine",
-		"blink_led":     "/devices/blink",
-		"fw_update":     "/devices/updatefirmware",
+		"login":          "/session/login",
+		"list_controls":  "/controls/list",
+		"add_control":    "/controls/add_control",
+		"delete_control": "/controls/delete_control",
+		"list_buttons":   "/controls/get_buttons_control",
+		"blast_ir":       "/codes/blast",
+		"list_routines":  "/routines/list",
+		"play_routine":   "/routines/play_routine",
+		"blink_led":      "/devices/blink",
+		"fw_update":      "/devices/updatefirmware",
 	}
 	apiHost.Path = path.Join(apiHost.Path, endPoints[action])
 	return apiHost.String()
@@ -89,6 +91,24 @@ func (r Remotsy) GetRemotes() []interface{} {
 	jsonData, _ := json.Marshal(data)
 	apiURL := URLGenerator("list_controls")
 	response := Post(apiURL, jsonData)["data"].(map[string]interface{})["controls"].([]interface{})
+	return response
+}
+
+//AddRemote deletes a specified remote
+//auth_key is the token from GetAPIKey
+//brand, devtype, name, iddev, codeset are attribs from the new Remote
+func (r Remotsy) AddRemote(brand, devtype, name, iddev, codeset string) map[string]interface{} {
+	data := map[string]string{
+		"auth_key": AuthKey,
+		"brand":    brand,
+		"devtype":  devtype,
+		"name":     name,
+		"iddev":    iddev,
+		"codeset":  codeset,
+	}
+	jsonData, _ := json.Marshal(data)
+	apiURL := URLGenerator("add_control")
+	response := Post(apiURL, jsonData)
 	return response
 }
 
